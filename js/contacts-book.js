@@ -1,7 +1,23 @@
 "use strict";
 
+const findByName = function (searchTermName) {
+    return this.contacts.filter((contact) => {
+        return contact.name.indexOf(searchTermName) !== -1;
+    });
+}
+
+const addNewContact = function (name, phone, email) {
+    this.contacts.push({
+        'name': name,
+        'phone': phone,
+        'email': email
+    });
+
+    return this;
+}
+
 const book = {
-    'constacts': [
+    contacts: [
         {
             'name': 'Alex',
             'phone': '+380998877666',
@@ -17,29 +33,15 @@ const book = {
             'phone': '+380550000022',
             'email': 'mariaspecoal@gmail.com',
         }
-    ]
+    ],
+    findByName,
+    addNewContact
 };
 
-function findByName(searchTermName) {
-    return this.constacts.filter((contact) => {
-        return contact.name.indexOf(searchTermName) !== -1;
-    });
-
-}
-
-function addNewContact(name, phone, email) {
-    this.constacts.push({
-        'name': name,
-        'phone': phone,
-        'email': email
-    });
-
-    return this;
-}
-
-let foundContacts = findByName.apply(book, ['en']);
+let foundContacts = book.findByName('en');
 console.log(foundContacts);
 
-addNewContact.apply(book, ['Lenon', '+380554444400', 'thereislenon@gmail.com']);
-foundContacts = findByName.apply(book, ['en']);
+book.addNewContact('Lenon', '+380554444400', 'thereislenon@gmail.com');
+foundContacts = book.findByName('en');
+
 console.log(foundContacts);
